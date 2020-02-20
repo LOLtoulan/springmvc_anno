@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 开启注解扫描，因为需要将该xml加载到项目中，所以，将该文件配置到web.xml中，让核心控制器加载的时候将该文件也加载到项目中 -->
+    <context:component-scan base-package="com.toulan"></context:component-scan>
+
+
+    <!--
+        例如：某个请求的全路径为:http://localhost:8080/springmvc_introduction_demo01_war/WEB-INF/pages/success.jsp
+
+        因为我们的项目启动地址为 http://localhost:8080/springmvc_introduction_demo01_war 所以当
+        prefix：/WEB-INF/pages/
+        suffix：.jsp
+
+        我们在controller层return页面时就只需要传jsp页面的名称: success ，如果我们此处不配置suffix 我们就需要传success.jsp  return "success.jsp";
+        如果此处不写 prefix  suffix 那么我们在控制层就需要返回 /WEB-INF/pages/success.jsp  return "/WEB-INF/pages/success.jsp";
+    -->
+    <!--配置视图解析器对象-->
+    <!--通过Spring的IOC容器，创建InternalResourceViewResolver对象，并使用-->
+    <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!-- 在构建URL时用于查看名称的前缀，通俗点讲，就是浏览器请求路径的前缀 -->
+        <property name="prefix" value="/WEB-INF/pages/"></property>
+        <!-- 在构建URL时附加到视图名称的后缀 -->
+        <property name="suffix" value=".jsp"></property>
+
+    </bean>
+
+    <!--开启SpringMVC框架注解的支持，例如RequestMapping等
+    同时使用 <mvc:annotation-driven> 自动加载 RequestMappingHandlerMapping （处理映射器） 和
+    RequestMappingHandlerAdapter （ 处 理 适 配 器 ） ， 可 用 在 SpringMVC.xml 配 置 文 件 中 使 用
+    <mvc:annotation-driven>替代注解处理器和适配器的配置。
+    -->
+    <mvc:annotation-driven></mvc:annotation-driven>
+
+</beans>
