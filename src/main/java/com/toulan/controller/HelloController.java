@@ -8,6 +8,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
+import java.util.Map;
 
 /**
  * @Author LOL_toulan
@@ -117,6 +119,60 @@ public class HelloController {
         return "success";
     }
 
+/*
 
+    @RequestMapping("/testModelAttribute")
+    public String testModelAttribute(User user) {
 
+        System.out.println("testModelAttribute执行了");
+        System.out.println(user);
+        return "success";
+    }
+
+    @ModelAttribute
+    public void showUser() {
+        System.out.println("showUser执行了");
+    }
+
+*/
+
+/*    @RequestMapping("/testModelAttribute")
+    public String testModelAttribute(User user) {
+
+        System.out.println("testModelAttribute执行了");
+        System.out.println(user);
+        return "success";
+    }
+
+    @ModelAttribute
+    public User showUser(String username, Integer age) {
+        //通过username查询数据库中的信息(模拟)
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword("loltoulan");
+        user.setAge(age);
+        user.setDate(new Date());
+        return user;
+    }*/
+
+    @RequestMapping("/testModelAttribute")
+    public String testModelAttribute(@ModelAttribute("show") User user) {
+
+        System.out.println("testModelAttribute执行了");
+        System.out.println(user);
+        return "success";
+    }
+
+    @ModelAttribute
+    public void showUser(String username, Integer age,Map<String,User> userMap) {
+        //通过username查询数据库中的信息(模拟)
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword("loltoulan");
+        user.setAge(age);
+        user.setDate(new Date());
+
+        userMap.put("show", user);
+
+    }
 }
